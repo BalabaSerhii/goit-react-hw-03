@@ -1,8 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId } from "react";
 import * as Yup from "yup";
-import css from "./ContactForm.module.css"
-
+import css from "./ContactForm.module.css";
 
 const FeedbackSchema = Yup.object().shape({
   username: Yup.string()
@@ -12,7 +11,7 @@ const FeedbackSchema = Yup.object().shape({
   number: Yup.string().email("Must be a valid email!").required("Required"),
 });
 
-export default function ContactForm() {
+export default function ContactForm({ onAdd }) {
   const nameFieldId = useId();
   const numberFieldId = useId();
 
@@ -22,7 +21,12 @@ export default function ContactForm() {
   };
   const handleSubmit = (values, actions) => {
     console.log(values);
-    actions.resetForm();
+    onAdd({
+      contName: values.username,
+      contNumber: values.number,
+      // id: Data.now(),
+    });
+    // actions.resetForm();
   };
   return (
     <Formik

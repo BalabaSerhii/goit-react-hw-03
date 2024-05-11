@@ -1,15 +1,16 @@
 import css from "./Contact.module.css";
 
-export default function Contact({ clients }) {
+export default function Contact({
+  clients: { id, name, number },
+  deleteContact,
+}) {
   return (
     <div>
-      {clients.map(({ id, name, number }) => (
-        <div key={id} className={css.client}>
-          <p>{name}</p>
-          <p>{number}</p>
-          <button className={css.btn}>Delet</button>
-        </div>
-      ))}
+      <p>{name}</p>
+      <p>{number}</p>
+      <button className={css.btn} onClick={() => deleteContact(id)}>
+        Delete
+      </button>
     </div>
   );
 }
