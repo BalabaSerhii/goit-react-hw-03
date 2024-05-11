@@ -1,12 +1,24 @@
+import css from "./App.module.css"
 import ContactForm from "../ContactForm/ContactForm.jsx";
 import SearchBox from "../SearchBox/SearchBox.jsx";
 import ContactList from "../ContactList/ContactList.jsx";
 import dataContacts from "../data/dataContacts.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function App() {
-  const [contact, setContact] = useState(dataContacts);
+  const [contact, setContact] = useState(() => {
+    const storedContacts = localStorage.getItem("contacts");
+    return storedContacts ? JSON.parse(storedContacts) : dataContacts;
+  });
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contact));
+  }, [contact]);
+
+
+
+
+
   const [filter, setFilter] = useState("");
   const addContact = ({ contName, contNumber }) => {
     const newContact = { id: uuidv4(), name: contName, number: contNumber };
@@ -26,7 +38,7 @@ export default function App() {
   );
 
   return (
-    <div>
+    <div className={css.container}>
       <h1>Phonebook</h1>
       <ContactForm onAdd={addContact} />
       <SearchBox value={filter} onFilter={setFilter} />

@@ -5,7 +5,7 @@ export default function Contact({
   deleteContact,
 }) {
   return (
-    <div>
+    <div className={css.client}>
       <p>{name}</p>
       <p>{number}</p>
       <button className={css.btn} onClick={() => deleteContact(id)}>
